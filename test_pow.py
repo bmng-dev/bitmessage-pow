@@ -6,7 +6,7 @@ time_to_live = 300
 trials = 1000
 padding = 1000
 
-lib = ctypes.CDLL('.\bmpow32.dll')
+lib = ctypes.CDLL('bmpow32.dll')
 
 lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
 lib.BitmessagePOW.restype = ctypes.c_uint64
