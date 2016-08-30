@@ -1,0 +1,12 @@
+version: 1.0.{build}
+
+build_script:
+- cmd: make.bat
+
+test_script:
+- cmd: >-
+    python test_pow.py
+
+    C:\Python27-x64\python test_pow.py
+
+deploy: off
