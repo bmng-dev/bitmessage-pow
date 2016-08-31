@@ -12,7 +12,7 @@ build_script:
     CL /I C:\OpenSSL-Win64\include /INCREMENTAL bmpow.c /MT /link /DLL /OUT:bmpow64.dll /LIBPATH:"C:\OpenSSL-Win64\lib" libeay32.lib ws2_32.lib
 
 - cmd: >-
-    C:\MinGW\bin\gcc -v -Wall -O3 -D _WIN32 -I"C:\OpenSSL-Win32\include" -L"C:\OpenSSL-Win32\lib" -c -o bmpow32_m.o bmpow.c
+    C:\MinGW\bin\gcc -v -Wall -O3 -D _WIN32 -I"C:\OpenSSL-Win32\include" -L"C:\OpenSSL-Win32\lib" -o bmpow32_m.o -c bmpow.c
 
     C:\MinGW\bin\gcc -v -static-libgcc -shared bmpow32_m.o -D_WIN32 -O3 -I"C:\OpenSSL-Win32\include" -L"C:\OpenSSL-Win32\lib" -fPIC -shared -lcrypt32 -leay32 -lwsock32 -o bmpow32_m.dll -Wl,--out-implib,bmpow32_m.a
 
