@@ -12,7 +12,11 @@
 #define HASH_SIZE 64
 #define BUFLEN 16384
 
-#define EXPORT __declspec(dllexport)
+#if defined(__GNUC__)
+  #define EXPORT __attribute__ ((__visibility__("default")))
+#elif defined(_WIN32)
+  #define EXPORT __declspec(dllexport)
+#endif
 
 #define ntohll(x) ( ( (uint64_t)(ntohl( (unsigned int)((x << 32) >> 32) )) << 32) | ntohl( ((unsigned int)(x >> 32)) ) )
 

@@ -52,7 +52,23 @@ def do_pow_x64():
 
     return lib.BitmessagePOW(digest, target)
 
-for do_pow in [do_pow_py, do_pow_x86, do_pow_x64]:
+def do_pow_x86_m():
+    lib = ctypes.CDLL('bmpow32_m.dll')
+
+    lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
+    lib.BitmessagePOW.restype = ctypes.c_uint64
+
+    return lib.BitmessagePOW(digest, target)
+
+def do_pow_x64_m():
+    lib = ctypes.CDLL('bmpow64_m.dll')
+
+    lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
+    lib.BitmessagePOW.restype = ctypes.c_uint64
+
+    return lib.BitmessagePOW(digest, target)
+
+for do_pow in [do_pow_py, do_pow_x86, do_pow_x64, do_pow_x86_m, do_pow_x64_m]:
     try:
         start = timeit.default_timer()
         nonce = do_pow()
