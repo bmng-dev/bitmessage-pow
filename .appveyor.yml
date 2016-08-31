@@ -14,7 +14,9 @@ build_script:
 - cmd: >-
     DIR C:\MinGW
 
-    DIR C:\MinGW\ibn
+    DIR C:\MinGW\bin
+
+    DIR C:\MinGW\msys
 
 #- cmd: >-
 #    C:\MinGW\bin\gcc -v -Wall -O3 -D_WIN32 -I"C:\OpenSSL-Win32\include" -L"C:\OpenSSL-Win32\lib" -o bmpow32_m.o -c bmpow.c
