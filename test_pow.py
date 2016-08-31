@@ -7,9 +7,11 @@ logging.basicConfig(format='%(levelname)8s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 if sys.maxsize > 2**32:
-    logger.info('Python 64-bit')
+    logger.info('Python 64-bit)
 else:
     logger.info('Python 32-bit')
+
+logger.info('Pointer Size: %i, Max Size: %#018x', ctypes.sizeof(ctypes.c_void_p), sys.maxsize)
 
 payload = '\x00'
 time_to_live = 300
@@ -39,6 +41,6 @@ def do_pow_x64():
 
 for do_pow in [do_pow_x86, do_pow_x64]:
     try:
-        logger.info('%s returned %x', do_pow.__name__, do_pow())
+        logger.info('%s returned %#018x', do_pow.__name__, do_pow())
     except Exception as err:
         logger.warning('%s failed: %s', do_pow.__name__, err)
