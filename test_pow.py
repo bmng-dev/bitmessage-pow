@@ -7,7 +7,7 @@ logging.basicConfig(format='%(levelname)8s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 if sys.maxsize > 2**32:
-    logger.info('Python 64-bit)
+    logger.info('Python 64-bit')
 else:
     logger.info('Python 32-bit')
 
