@@ -3,7 +3,7 @@ import hashlib
 import logging
 import sys
 
-logging.basicFormat(format='%(levelname)8s - %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(levelname)8s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 if sys.maxsize > 2**32:
