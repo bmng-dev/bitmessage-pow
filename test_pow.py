@@ -28,12 +28,12 @@ digest = hashlib.sha512(payload).digest()
 target = 2 ** 64 / (trials * (adjustedLength + ((time_to_live * adjustedLength) / (2 ** 16))))
 
 def do_pow_py():
-    target = Q.pack(target)
+    target_bytes = Q.pack(target)
     message = bytearray(8 + len(digest))
     message[8:] = digest
     for nonce in xrange(0x7FFFFFFF):
         Q.pack_into(message, 0, nonce)
-        if 0 >= cmp(hashlib.sha512(hashlib.sha512(message).digest()).digest(), target):
+        if 0 >= cmp(hashlib.sha512(hashlib.sha512(message).digest()).digest(), target_bytes):
             return nonce
 
 def do_pow_x86():
