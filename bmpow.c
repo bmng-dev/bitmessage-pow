@@ -47,7 +47,7 @@ DWORD WINAPI threadfunc(LPVOID param) {
 			successval = tmpnonce;
 		}
 	}
-	return NULL;
+	return EXIT_SUCCESS;
 }
 
 void getnumthreads()
