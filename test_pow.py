@@ -39,6 +39,6 @@ def do_pow_x64():
 
 for do_pow in [do_pow_x86, do_pow_x64]:
     try:
-        logger.info('%s returned %', do_pow.__name__, do_pow())
+        logger.info('%s returned %x', do_pow.__name__, do_pow())
     except Exception as err:
         logger.warning('%s failed: %s', do_pow.__name__, err)
