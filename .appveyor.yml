@@ -12,7 +12,7 @@ build_script:
     CL /I C:\OpenSSL-Win64\include /INCREMENTAL bmpow.c /MT /link /DLL /OUT:bmpow64.dll /LIBPATH:"C:\OpenSSL-Win64\lib" libeay32.lib ws2_32.lib
 
 - cmd: >-
-    C:\MinGW\msys\1.0\msys.bat
+    C:\MinGW\msys\1.0\msys.bat --norxvt
 
     gcc -v -Wall -O3 -D_WIN32 -I"C:\OpenSSL-Win32\include" -o bmpow32_m.o -c bmpow.c
 
