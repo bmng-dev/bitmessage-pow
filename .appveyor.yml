@@ -7,11 +7,9 @@ environment:
 
 build_script:
 - cmd: >-
-    DIR C:\msys64\dev
-    
-    DIR C:\msys64\mingw64
+    C:\msys64\mingw64\bin\gcc -v -Wall -O3 -D_WIN32 -I"C:\msys64\mingw64\include" -o bmpow64_m.o -c bmpow.c
 
-    C:\msys64\mingw64\bin\gcc --version
+    gcc -v -static-libgcc -shared bmpow64_m.o -D_WIN32 -O3 -I"C:\msys64\mingw64\include" -L"C:\msys64\mingw64\lib" -fPIC -shared -lcrypt32 -leay32 -lwsock32 -o bmpow64_m.dll -Wl,--out-implib,bmpow64_m.a
 
 - cmd: >-
     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
