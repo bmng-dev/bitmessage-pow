@@ -59,10 +59,11 @@ void getnumthreads()
 {
 	DWORD_PTR dwProcessAffinity, dwSystemAffinity;
 	size_t len = sizeof(dwProcessAffinity);
+	int i;
 	if (numthreads > 0)
 		return;
 	GetProcessAffinityMask(GetCurrentProcess(), &dwProcessAffinity, &dwSystemAffinity);
-	for (int i = 0; i < len * 8; i++)
+	for (i = 0; i < len * 8; i++)
 		if (dwProcessAffinity & (1LL << i))
 			numthreads++;
 	if (numthreads == 0) // something failed
@@ -74,13 +75,14 @@ EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, unsigned long
 {
 	HANDLE* threads;
 	unsigned int *threaddata;
+	int i;
 	successval = 0;
 	max_val = target;
 	getnumthreads();
 	initialHash = (unsigned char *)starthash;
 	threads = (HANDLE*)calloc(sizeof(HANDLE), numthreads);
 	threaddata = (unsigned int *)calloc(sizeof(unsigned int), numthreads);
-	for (int i = 0; i < numthreads; i++) {
+	for (i = 0; i < numthreads; i++) {
 		threaddata[i] = (unsigned int)i;
 		threads[i] = CreateThread(NULL, 0, threadfunc, (LPVOID)&threaddata[i], 0, NULL);
 		SetThreadPriority(threads[i], THREAD_PRIORITY_IDLE);
