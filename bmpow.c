@@ -28,8 +28,8 @@ unsigned int numthreads = 0;
 DWORD WINAPI threadfunc(LPVOID param) {
 	unsigned int incamt = *((unsigned int*)param);
 	SHA512_CTX sha;
-	unsigned char buf[HASH_SIZE + sizeof(uint64_t)] = { 0 };
-	unsigned char output[HASH_SIZE] = { 0 };
+	unsigned char buf[HASH_SIZE + sizeof(uint64_t)];
+	unsigned char output[HASH_SIZE];
 
 	memcpy(buf + sizeof(uint64_t), initialHash, HASH_SIZE);
 
