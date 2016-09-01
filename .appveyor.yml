@@ -6,7 +6,7 @@ install:
 
     C:\msys64\usr\bin\bash -lc "pacman --noconfirm --needed -Sy bash pacman pacman-mirrors msys2-runtime msys2-runtime-devel"
 
-    C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S mingw-w64-x86_64-{gcc,openssl}"
+    C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S mingw-w64-x86_64-{openssl}"
 
 build_script:
 - cmd: >-
