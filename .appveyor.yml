@@ -2,6 +2,9 @@ version: 1.0.{build}
 
 build_script:
 - cmd: >-
+    C:\MinGW\bin\mingw32-gcc -v -Wall -O3 -D_WIN32 -I"C:\OpenSSL-Win32\include" -o bmpow32_m.o -c bmpow.c
+    
+- cmd: >-
     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
 
     CL /I C:\OpenSSL-Win32\include /INCREMENTAL bmpow.c /MT /link /DLL /OUT:bmpow32.dll /LIBPATH:"C:\OpenSSL-Win32\lib" libeay32.lib ws2_32.lib
@@ -11,12 +14,10 @@ build_script:
 
     CL /I C:\OpenSSL-Win64\include /INCREMENTAL bmpow.c /MT /link /DLL /OUT:bmpow64.dll /LIBPATH:"C:\OpenSSL-Win64\lib" libeay32.lib ws2_32.lib
 
-- cmd: >-
-    SET MSYSTEM=MINGW32
+#- cmd: >-
+#    SET MSYSTEM=MINGW32
 
-    C:\MinGW\msys\1.0\msys.bat --norxvt
-
-    gcc -v -Wall -O3 -D_WIN32 -I"C:\OpenSSL-Win32\include" -o bmpow32_m.o -c bmpow.c
+#    C:\MinGW\msys\1.0\msys.bat --norxvt
 
 #    gcc -v -static-libgcc -shared bmpow32_m.o -D_WIN32 -O3 -I"C:\OpenSSL-Win32\include" -L"C:\OpenSSL-Win32\lib" -fPIC -shared -lcrypt32 -leay32 -lwsock32 -o bmpow32_m.dll -Wl,--out-implib,bmpow32_m.a
 
