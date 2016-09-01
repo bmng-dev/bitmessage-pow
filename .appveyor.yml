@@ -1,14 +1,15 @@
 version: 1.0.{build}
 
+shallow_clone: true
+
+environment:
+  MSYSTEM: MINGW64
+
 install:
-- cmd: >-
-    SET MSYSTEM=MINGW64
-
-    C:\msys64\usr\bin\bash -lc "pacman --noconfirm --needed -Sy bash pacman pacman-mirrors msys2-runtime msys2-runtime-devel"
-
-    C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S mingw-w64-x86_64-{openssl}"
+- cmd: C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S mingw-w64-x86_64-openssl"
 
 build_script:
+- cmd: DIR C:\msys64
 - cmd: >-
     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
 
@@ -18,23 +19,6 @@ build_script:
     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
 
     CL /I C:\OpenSSL-Win64\include /INCREMENTAL bmpow.c /MT /link /DLL /OUT:bmpow64.dll /LIBPATH:"C:\OpenSSL-Win64\lib" libeay32.lib ws2_32.lib
-
-#- cmd: >-
-#    SET MSYSTEM=MINGW32
-
-#    C:\MinGW\msys\1.0\msys.bat --norxvt
-
-#    gcc -v -static-libgcc -shared bmpow32_m.o -D_WIN32 -O3 -I"C:\OpenSSL-Win32\include" -L"C:\OpenSSL-Win32\lib" -fPIC -shared -lcrypt32 -leay32 -lwsock32 -o bmpow32_m.dll -Wl,--out-implib,bmpow32_m.a
-
-#- cmd: >-
-#    C:\MinGW\bin\gcc -v -Wall -O3 -D_WIN32 -I"C:\OpenSSL-Win32\include" -L"C:\OpenSSL-Win32\lib" -o bmpow32_m.o -c bmpow.c
-#
-#    C:\MinGW\bin\gcc -v -static-libgcc -shared bmpow32_m.o -D_WIN32 -O3 -I"C:\OpenSSL-Win32\include" -L"C:\OpenSSL-Win32\lib" -fPIC -shared -lcrypt32 -leay32 -lwsock32 -o bmpow32_m.dll -Wl,--out-implib,bmpow32_m.a
-#
-#- cmd: >-
-#    C:\mingw-w64\i686-5.3.0-posix-dwarf-rt_v4-rev0\mingw32\bin\gcc -v -Wall -O3 -m64 -D _WIN32 -I"C:\OpenSSL-Win64\include" -L"C:\OpenSSL-Win64\lib" -c -o bmpow64_m.o bmpow.c
-#
-#    C:\mingw-w64\i686-5.3.0-posix-dwarf-rt_v4-rev0\mingw32\bin\gcc -v -static-libgcc -shared bmpow64_m.o -D_WIN32 -O3 -m64 -I"C:\OpenSSL-Win64\include" -L"C:\OpenSSL-Win64\lib" -fPIC -shared -lcrypt32 -leay32 -lwsock32 -o bmpow64_m.dll -Wl,--out-implib,bmpow64_m.a
 
 test_script:
 - cmd: >-
