@@ -5,11 +5,12 @@ shallow_clone: true
 environment:
   MSYSTEM: MINGW64
 
-install:
-- cmd: C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S mingw-w64-x86_64-openssl"
-
 build_script:
-- cmd: DIR C:\msys64
+- cmd: >-
+    C:\msys64\mingw64_shell.bat
+
+    gcc --version
+
 - cmd: >-
     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
 
