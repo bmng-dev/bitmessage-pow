@@ -2,6 +2,8 @@ version: 1.0.{build}
 
 build_script:
 - cmd: >-
+    C:\MinGW\msys\1.0\bin\bash --login
+
     C:\MinGW\bin\mingw32-gcc -v -Wall -O3 -D_WIN32 -I"C:\OpenSSL-Win32\include" -o bmpow32_m.o -c bmpow.c
     
 - cmd: >-
