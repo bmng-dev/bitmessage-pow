@@ -33,7 +33,7 @@ DWORD WINAPI threadfunc(LPVOID param) {
 
 	memcpy(buf + sizeof(uint64_t), initialHash, HASH_SIZE);
 
-	unsigned long long tmpnonce = incamt;
+	unsigned long long tmpnonce = (unsigned long long)incamt;
 	unsigned long long * nonce = (unsigned long long *)buf;
 	unsigned long long * hash = (unsigned long long *)output;
 	while (successval == 0) {
