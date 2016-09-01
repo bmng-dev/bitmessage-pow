@@ -9,7 +9,7 @@ build_script:
 - cmd: >-
     SET PATH=C:\msys64\usr\bin\;%PATH%
 
-    bash -lc "export PATH=/mingw64/bin:$PATH && cd $APPVEYOR_BUILD_FOLDER && g++ -v -Wall -O3 -D_WIN32 -o bmpow64_m.o -c bmpow.c && g++ -v -static-libgcc -shared -Wall -O3 -D_WIN32 bmpow64_m.o -fPIC -shared -lcrypt32 -leay32 -lwsock32 -o bmpow64_m.dll -Wl,--out-implib,bmpow64_m.a"
+    bash -lc "export PATH=/mingw64/bin:$PATH && cd $APPVEYOR_BUILD_FOLDER && g++ -v -Wall -O3 -D_WIN32 -o bmpow64_m.o -c bmpow.c && g++ -v -static-libgcc -shared -Wall -O3 -D_WIN32 bmpow64_m.o -fPIC -shared -lcrypt32 -llibeay32 -lwsock32 -o bmpow64_m.dll -Wl,--out-implib,bmpow64_m.a"
 
 - cmd: >-
     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
