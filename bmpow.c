@@ -62,7 +62,7 @@ void getnumthreads()
 		return;
 	GetProcessAffinityMask(GetCurrentProcess(), &dwProcessAffinity, &dwSystemAffinity);
 	for (unsigned int i = 0; i < len * 8; i++)
-		if (dwProcessAffinity & (1i64 << i))
+		if (dwProcessAffinity & (1LL << i))
 			numthreads++;
 	if (numthreads == 0) // something failed
 		numthreads = 1;
