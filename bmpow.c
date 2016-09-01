@@ -36,7 +36,7 @@ DWORD WINAPI threadfunc(LPVOID param) {
 	unsigned long long * hash = (unsigned long long *)output;
 
 	memcpy(buf + sizeof(uint64_t), initialHash, HASH_SIZE);
-	
+
 	while (successval == 0) {
 		tmpnonce += numthreads;
 
@@ -62,7 +62,7 @@ void getnumthreads()
 	if (numthreads > 0)
 		return;
 	GetProcessAffinityMask(GetCurrentProcess(), &dwProcessAffinity, &dwSystemAffinity);
-	for (unsigned int i = 0; i < len * 8; i++)
+	for (int i = 0; i < len * 8; i++)
 		if (dwProcessAffinity & (1LL << i))
 			numthreads++;
 	if (numthreads == 0) // something failed
@@ -72,14 +72,16 @@ void getnumthreads()
 
 EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, unsigned long long target)
 {
+	HANDLE* threads;
+	unsigned int *threaddata;
 	successval = 0;
 	max_val = target;
 	getnumthreads();
 	initialHash = (unsigned char *)starthash;
-	HANDLE* threads = (HANDLE*)calloc(sizeof(HANDLE), numthreads);
-	unsigned int *threaddata = (unsigned int *)calloc(sizeof(unsigned int), numthreads);
-	for (unsigned int i = 0; i < numthreads; i++) {
-		threaddata[i] = i;
+	threads = (HANDLE*)calloc(sizeof(HANDLE), numthreads);
+	threaddata = (unsigned int *)calloc(sizeof(unsigned int), numthreads);
+	for (int i = 0; i < numthreads; i++) {
+		threaddata[i] = (unsigned int)i;
 		threads[i] = CreateThread(NULL, 0, threadfunc, (LPVOID)&threaddata[i], 0, NULL);
 		SetThreadPriority(threads[i], THREAD_PRIORITY_IDLE);
 	}
