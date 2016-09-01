@@ -1,11 +1,14 @@
 version: 1.0.{build}
 
-build_script:
+install:
 - cmd: >-
-    C:\MinGW\msys\1.0\bin\bash
+    SET MSYSTEM=MINGW64
 
-    C:\MinGW\bin\mingw32-gcc -v -Wall -O3 -D_WIN32 -I"C:\OpenSSL-Win32\include" -o bmpow32_m.o -c bmpow.c
-    
+    C:\msys64\usr\bin\bash -lc "pacman --noconfirm --needed -Sy bash pacman pacman-mirrors msys2-runtime msys2-runtime-devel"
+
+    C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S mingw-w64-x86_64-{gcc,openssl}"
+
+build_script:
 - cmd: >-
     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
 
