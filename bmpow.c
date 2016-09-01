@@ -31,11 +31,12 @@ DWORD WINAPI threadfunc(LPVOID param) {
 	unsigned char buf[HASH_SIZE + sizeof(uint64_t)];
 	unsigned char output[HASH_SIZE];
 
-	memcpy(buf + sizeof(uint64_t), initialHash, HASH_SIZE);
-
-	unsigned long long tmpnonce = (unsigned long long)incamt;
+	unsigned long long tmpnonce = incamt;
 	unsigned long long * nonce = (unsigned long long *)buf;
 	unsigned long long * hash = (unsigned long long *)output;
+
+	memcpy(buf + sizeof(uint64_t), initialHash, HASH_SIZE);
+	
 	while (successval == 0) {
 		tmpnonce += numthreads;
 
