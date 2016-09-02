@@ -6,9 +6,9 @@ build_script:
 - cmd: >-
     "C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\vcvarsall.bat" x86
 
-    CL /I C:\OpenSSL-Win32\include /INCREMENTAL /Tc bmpow.c /MT /link /DLL /OUT:bmpow32.dll /LIBPATH:"C:\OpenSSL-Win32\lib" libeay32.lib ws2_32.lib
+    CL /I C:\OpenSSL-Win32\include bmpow.c /MT /Febmpow32 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win32\lib" libeay32.lib ws2_32.lib
 
-    CL /I C:\OpenSSL-Win32\include /INCREMENTAL /Tp bitmsghash.cpp /MT /link /DLL /OUT:bitmsghash32.dll /LIBPATH:"C:\OpenSSL-Win32\lib" libeay32.lib ws2_32.lib
+    CL /I C:\OpenSSL-Win32\include bitmsghash.cpp /MT /Febitmsghash32 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win32\lib" libeay32.lib ws2_32.lib
 
 - cmd: >-
     "C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\vcvarsall.bat" x86_amd64
