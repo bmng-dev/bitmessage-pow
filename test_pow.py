@@ -10,14 +10,7 @@ logger = logging.getLogger(__name__)
 
 Q = struct.Struct('!Q')
 
-if sys.maxsize > 2**32:
-    logger.info('Python 64-bit')
-else:
-    logger.info('Python 32-bit')
-
-logger.info('Pointer Size: %i, Max Size: %#018x', ctypes.sizeof(ctypes.c_void_p), sys.maxsize)
-
-payload = '\x00'
+payload = '\x00' * 4
 time_to_live = 300
 trials = 1000
 padding = 1000
@@ -68,23 +61,30 @@ def do_pow_x64_m():
 
     return lib.BitmessagePOW(digest, target)
 
-def do_pow_x86_old():
-    lib = ctypes.CDLL('BitMsgHash32.dll')
+def do_pow_x86_alt():
+    lib = ctypes.CDLL('bitmsghash32.dll')
 
     lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
     lib.BitmessagePOW.restype = ctypes.c_uint64
 
     return lib.BitmessagePOW(digest, target)
 
-def do_pow_x64_old():
-    lib = ctypes.CDLL('BitMsgHash64.dll')
+def do_pow_x64_alt():
+    lib = ctypes.CDLL('bitmsghash64.dll')
 
     lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
     lib.BitmessagePOW.restype = ctypes.c_uint64
 
     return lib.BitmessagePOW(digest, target)
 
-for do_pow in [do_pow_py, do_pow_x86, do_pow_x64, do_pow_x86_m, do_pow_x64_m, do_pow_x86_old, do_pow_x64_old]:
+
+pow_funcs = [do_pow_py]
+if sys.maxsize > 0xFFFFFFFF:
+    pow_funcs.extend([do_pow_x64, do_pow_x64_m, do_pow_x64_alt])
+else:
+    pow_funcs.extend([do_pow_x86, do_pow_x86_m, do_pow_x86_alt])
+
+for do_pow in pow_funcs:
     try:
         start = timeit.default_timer()
         nonce = do_pow()
