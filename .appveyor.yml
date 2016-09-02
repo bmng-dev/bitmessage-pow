@@ -6,16 +6,16 @@ build_script:
 - cmd: >-
     "C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\vcvarsall.bat" x86
 
-    CL /I C:\OpenSSL-Win32\include bmpow.c /MT /Febmpow32 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win32\lib" libeay32.lib ws2_32.lib
+    CL /IC:\OpenSSL-Win32\include bmpow.c /LD /Febmpow32 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win32\lib" libeay32.lib ws2_32.lib
 
-    CL /I C:\OpenSSL-Win32\include bitmsghash.cpp /MT /Febitmsghash32 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win32\lib" libeay32.lib ws2_32.lib
+    CL /IC:\OpenSSL-Win32\include bitmsghash.cpp /LD /Febitmsghash32 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win32\lib" libeay32.lib ws2_32.lib
 
 - cmd: >-
     "C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\vcvarsall.bat" x86_amd64
 
-    CL /I C:\OpenSSL-Win64\include /INCREMENTAL /Tc bmpow.c /MT /link /DLL /OUT:bmpow64.dll /LIBPATH:"C:\OpenSSL-Win64\lib" libeay32.lib ws2_32.lib
+    CL /IC:\OpenSSL-Win64\include bmpow.c /LD /Febmpow64 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win64\lib" libeay32.lib ws2_32.lib
 
-    CL /I C:\OpenSSL-Win64\include /INCREMENTAL /Tp bitmsghash.cpp /MT /link /DLL /OUT:bitmsghash64.dll /LIBPATH:"C:\OpenSSL-Win64\lib" libeay32.lib ws2_32.lib
+    CL /IC:\OpenSSL-Win64\include bitmsghash.cpp /LD /Febitmsghash64 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win64\lib" libeay32.lib ws2_32.lib
 
 - cmd: >-
     C:\msys64\usr\bin\bash -lc "export PATH=/mingw32/bin:$PATH && export MSYSTEM=MINGW32 && cd $APPVEYOR_BUILD_FOLDER && gcc -march=native -Wall -O3 -D_WIN32 -o bmpow32_m.o -c bmpow.c && gcc -march=native -static-libgcc -shared -Wall -O3 -D_WIN32 bmpow32_m.o -fPIC -shared -lcrypt32 -lcrypto -lwsock32 -o bmpow32_m.dll -Wl,--out-implib,bmpow32_m.a"
