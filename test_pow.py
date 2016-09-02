@@ -68,7 +68,23 @@ def do_pow_x64_m():
 
     return lib.BitmessagePOW(digest, target)
 
-for do_pow in [do_pow_py, do_pow_x86, do_pow_x64, do_pow_x86_m, do_pow_x64_m]:
+def do_pow_x86_old():
+    lib = ctypes.CDLL('BitMsgHash32.dll')
+
+    lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
+    lib.BitmessagePOW.restype = ctypes.c_uint64
+
+    return lib.BitmessagePOW(digest, target)
+
+def do_pow_x64_old():
+    lib = ctypes.CDLL('BitMsgHash64.dll')
+
+    lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
+    lib.BitmessagePOW.restype = ctypes.c_uint64
+
+    return lib.BitmessagePOW(digest, target)
+
+for do_pow in [do_pow_py, do_pow_x86, do_pow_x64, do_pow_x86_m, do_pow_x64_m, do_pow_x86_old, do_pow_x64_old]:
     try:
         start = timeit.default_timer()
         nonce = do_pow()

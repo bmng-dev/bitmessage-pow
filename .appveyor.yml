@@ -20,6 +20,8 @@ build_script:
 - cmd: >-
     C:\msys64\usr\bin\bash -lc "export PATH=/mingw64/bin:$PATH && export MSYSTEM=MINGW64 && cd $APPVEYOR_BUILD_FOLDER && gcc -march=native -Wall -O3 -D_WIN32 -o bmpow64_m.o -c bmpow.c && gcc -march=native -static-libgcc -shared -Wall -O3 -D_WIN32 bmpow64_m.o -fPIC -shared -lcrypt32 -lcrypto -lwsock32 -o bmpow64_m.dll -Wl,--out-implib,bmpow64_m.a"
 
+- ps: (new-object net.webclient).DownloadFile('https://github.com/mailchuck/PyBitmessage/releases/download/v0.5.2/BitMsgHash32.dll', 'BitMsgHash32.dll')
+- ps: (new-object net.webclient).DownloadFile('https://github.com/mailchuck/PyBitmessage/releases/download/v0.5.2/BitMsgHash64.dll', 'BitMsgHash64.dll')
 test_script:
 - cmd: >-
     python test_pow.py
