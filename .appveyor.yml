@@ -2,36 +2,19 @@ version: 1.0.{build}
 
 shallow_clone: true
 
-build_script:
-- cmd: >-
-    "C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\vcvarsall.bat" x86
+configuration: Release
 
-    CL /IC:\OpenSSL-Win32\include bmpow.c /LD /Febmpow32 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win32\lib" libeay32.lib ws2_32.lib
+platform:
+- Win32
+- x64
 
-    CL /IC:\OpenSSL-Win32\include bitmsghash.cpp /LD /Febitmsghash32 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win32\lib" libeay32.lib ws2_32.lib
-
-- cmd: >-
-    "C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\vcvarsall.bat" x86_amd64
-
-    CL /IC:\OpenSSL-Win64\include bmpow.c /LD /Febmpow64 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win64\lib" libeay32.lib ws2_32.lib
-
-    CL /IC:\OpenSSL-Win64\include bitmsghash.cpp /LD /Febitmsghash64 /link /INCREMENTAL:NO /LIBPATH:"C:\OpenSSL-Win64\lib" libeay32.lib ws2_32.lib
-
-- cmd: >-
-    C:\msys64\usr\bin\bash -lc "export PATH=/mingw32/bin:$PATH && export MSYSTEM=MINGW32 && cd $APPVEYOR_BUILD_FOLDER && gcc -march=native -Wall -O3 -D_WIN32 -o bmpow32_m.o -c bmpow.c && gcc -march=native -static-libgcc -shared -Wall -O3 -D_WIN32 bmpow32_m.o -fPIC -shared -lcrypt32 -lcrypto -lwsock32 -o bmpow32_m.dll -Wl,--out-implib,bmpow32_m.a"
-
-    C:\msys64\usr\bin\bash -lc "export PATH=/mingw64/bin:$PATH && export MSYSTEM=MINGW64 && cd $APPVEYOR_BUILD_FOLDER && gcc -march=native -Wall -O3 -D_WIN32 -o bmpow64_m.o -c bmpow.c && gcc -march=native -static-libgcc -shared -Wall -O3 -D_WIN32 bmpow64_m.o -fPIC -shared -lcrypt32 -lcrypto -lwsock32 -o bmpow64_m.dll -Wl,--out-implib,bmpow64_m.a"
-
-- ps: (new-object net.webclient).DownloadFile('https://github.com/mailchuck/PyBitmessage/releases/download/v0.5.2/BitMsgHash32.dll', 'BitMsgHash32.dll')
+environment:
+  VisualStudioVersion: 14.0
 
 test_script:
 - cmd: >-
     python test_pow.py
 
     C:\Python27-x64\python test_pow.py
-
-    python test_old.py
-
-    python test_old.py --win
 
 deploy: off
