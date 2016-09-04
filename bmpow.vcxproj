@@ -50,6 +50,7 @@
             <AdditionalLibraryDirectories Condition="'$(Platform)'=='Win32'">C:\OpenSSL-Win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
             <AdditionalLibraryDirectories Condition="'$(Platform)'=='x64'">C:\OpenSSL-Win64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
             <LinkIncremental>false</LinkIncremental>
+            <SubSystem>Windows</SubSystem>
         </Link>
     </ItemDefinitionGroup>
 

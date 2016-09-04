@@ -17,4 +17,7 @@ test_script:
 
     C:\Python27-x64\python test_pow.py
 
+artifacts:
+- path: bin\bmpow*.dll
+
 deploy: off
