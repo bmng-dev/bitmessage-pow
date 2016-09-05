@@ -1,16 +1,11 @@
 
-#include "Winsock.h"
-#include "Windows.h"
-#define uint64_t unsigned __int64
+#include <Windows.h>
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "openssl/sha.h"
-
-#define HASH_SIZE 64
-#define BUFLEN 16384
+#include <openssl/sha.h>
 
 #if defined(__GNUC__)
   #define EXPORT __attribute__ ((__visibility__("default")))
@@ -18,22 +13,37 @@
   #define EXPORT __declspec(dllexport)
 #endif
 
-#define ntohll(x) ( ( (uint64_t)(ntohl( (unsigned int)((x << 32) >> 32) )) << 32) | ntohl( ((unsigned int)(x >> 32)) ) )
+const int HASH_SIZE = SHA512_DIGEST_LENGTH;
 
-unsigned long long max_val;
-unsigned char *initialHash;
-unsigned long long successval = 0;
-unsigned int numthreads = 0;
+typedef unsigned __int8 byte_t;
+typedef unsigned __int32 uint32_t;
+typedef unsigned __int64 uint64_t;
+
+// http://segfault.kiev.ua/~netch/articles/20131219-bswap.txt
+// https://blogs.oracle.com/DanX/entry/optimizing_byte_swapping_for_fun
+#define BSWAP_64(x) ( ((uint64_t)(x) << 56) | \\
+					 (((uint64_t)(x) << 40) & 0x00ff000000000000ULL) | \\
+					 (((uint64_t)(x) << 24) & 0x0000ff0000000000ULL) | \\
+					 (((uint64_t)(x) <<  8) & 0x000000ff00000000ULL) | \\
+					 (((uint64_t)(x) >>  8) & 0x00000000ff000000ULL) | \\
+					 (((uint64_t)(x) >> 24) & 0x0000000000ff0000ULL) | \\
+					 (((uint64_t)(x) >> 40) & 0x000000000000ff00ULL) | \\
+					  ((uint64_t)(x) >> 56) )
+
+uint64_t max_val;
+uint8_t *initialHash;
+uint64_t successval = 0;
+uint32_t numthreads = 0;
 
 DWORD WINAPI threadfunc(LPVOID param) {
-	unsigned int incamt = *((unsigned int*)param);
+	uint32_t incamt = *((uint32_t*)param);
 	SHA512_CTX sha;
-	unsigned char buf[HASH_SIZE + sizeof(uint64_t)];
-	unsigned char output[HASH_SIZE];
+	uint8_t buf[HASH_SIZE + sizeof(uint64_t)];
+	uint8_t output[HASH_SIZE];
 
-	unsigned long long tmpnonce = incamt;
-	unsigned long long * nonce = (unsigned long long *)buf;
-	unsigned long long * hash = (unsigned long long *)output;
+	uint64_t tmpnonce = incamt;
+	uint64_t * nonce = (uint64_t *)buf;
+	uint64_t * hash = (uint64_t *)output;
 
 	memcpy(buf + sizeof(uint64_t), initialHash, HASH_SIZE);
 
@@ -68,22 +78,21 @@ void getnumthreads()
 			numthreads++;
 	if (numthreads == 0) // something failed
 		numthreads = 1;
-	printf("Number of threads: %i\n", (int)numthreads);
 }
 
-EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, unsigned long long target)
+EXPORT uint64_t BitmessagePOW(uint8_t * starthash, uint64_t target)
 {
 	HANDLE* threads;
-	unsigned int *threaddata;
+	uint32_t *threaddata;
 	int i;
 	successval = 0;
 	max_val = target;
 	getnumthreads();
-	initialHash = (unsigned char *)starthash;
+	initialHash = (uint8_t *)starthash;
 	threads = (HANDLE*)calloc(sizeof(HANDLE), numthreads);
-	threaddata = (unsigned int *)calloc(sizeof(unsigned int), numthreads);
+	threaddata = (uint32_t *)calloc(sizeof(uint32_t), numthreads);
 	for (i = 0; i < numthreads; i++) {
-		threaddata[i] = (unsigned int)i;
+		threaddata[i] = (uint32_t)i;
 		threads[i] = CreateThread(NULL, 0, threadfunc, (LPVOID)&threaddata[i], 0, NULL);
 		SetThreadPriority(threads[i], THREAD_PRIORITY_IDLE);
 	}
