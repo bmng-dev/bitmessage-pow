@@ -82,8 +82,7 @@ for do_pow in [do_pow_py_be, do_pow_py_le, do_pow_vs, do_pow_mingw, do_pow_alt]:
         start = timeit.default_timer()
         nonce = do_pow()
         elapsed = timeit.default_timer() - start
-        rate = nonce / elapsed if elapsed > 0 else nonce
         proof, = Q_BE.unpack_from(hashlib.sha512(hashlib.sha512(Q_BE.pack(nonce) + digest).digest()).digest(), 0)
-        logger.info('%s returned %#018x for proof %#018x in %.6f seconds (~%d nonces / second)', do_pow.__name__, nonce, proof, elapsed, rate)
+        logger.info('%s found %#018x for proof %#018x in %.6f seconds', do_pow.__name__, nonce, proof, elapsed)
     except Exception as err:
         logger.warning('%s failed: %s', do_pow.__name__, err)

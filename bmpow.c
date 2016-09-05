@@ -48,10 +48,7 @@ DWORD WINAPI threadfunc(LPVOID param) {
 	(*nonce) = incamt;
 	memcpy(buf + sizeof(uint64_t), initialHash, HASH_SIZE);
 
-	/* TODO: This loop is potentially infinite*/
-	while (successval == 0) {
-		(*nonce) += numthreads; /* increment nonce */
-
+	do {
 		SHA512_Init(&sha);
 		SHA512_Update(&sha, buf, POW_BUFFER_SIZE);
 		SHA512_Final(output, &sha);
@@ -61,8 +58,9 @@ DWORD WINAPI threadfunc(LPVOID param) {
 
 		if (0 >= memcmp(output, max_val, sizeof(uint64_t))) {
 			successval = BSWAP_64(*nonce);
+			break;
 		}
-	}
+	} while(((*nonce) += numthreads) > numthreads);
 	return EXIT_SUCCESS;
 }
 
