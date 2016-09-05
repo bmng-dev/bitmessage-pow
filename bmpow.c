@@ -23,13 +23,13 @@ typedef unsigned __int64 uint64_t;
 /* http://segfault.kiev.ua/~netch/articles/20131219-bswap.txt
  * https://blogs.oracle.com/DanX/entry/optimizing_byte_swapping_for_fun
  */
-#define BSWAP_64(x) ( ((uint64_t)(x) << 56) | \\
-					 (((uint64_t)(x) << 40) & 0x00ff000000000000ULL) | \\
-					 (((uint64_t)(x) << 24) & 0x0000ff0000000000ULL) | \\
-					 (((uint64_t)(x) <<  8) & 0x000000ff00000000ULL) | \\
-					 (((uint64_t)(x) >>  8) & 0x00000000ff000000ULL) | \\
-					 (((uint64_t)(x) >> 24) & 0x0000000000ff0000ULL) | \\
-					 (((uint64_t)(x) >> 40) & 0x000000000000ff00ULL) | \\
+#define BSWAP_64(x) ( ((uint64_t)(x) << 56) | \
+					 (((uint64_t)(x) << 40) & 0x00ff000000000000ULL) | \
+					 (((uint64_t)(x) << 24) & 0x0000ff0000000000ULL) | \
+					 (((uint64_t)(x) <<  8) & 0x000000ff00000000ULL) | \
+					 (((uint64_t)(x) >>  8) & 0x00000000ff000000ULL) | \
+					 (((uint64_t)(x) >> 24) & 0x0000000000ff0000ULL) | \
+					 (((uint64_t)(x) >> 40) & 0x000000000000ff00ULL) | \
 					  ((uint64_t)(x) >> 56) )
 
 uint64_t max_val;
