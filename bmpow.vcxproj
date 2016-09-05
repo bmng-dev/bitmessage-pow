@@ -43,13 +43,13 @@
         <ClCompile>
             <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
             <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">C:\OpenSSL-Win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-            <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+            <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
         </ClCompile>
         <Link>
             <AdditionalDependencies>libeay32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
             <AdditionalLibraryDirectories Condition="'$(Platform)'=='Win32'">C:\OpenSSL-Win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
             <AdditionalLibraryDirectories Condition="'$(Platform)'=='x64'">C:\OpenSSL-Win64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <LinkIncremental>false</LinkIncremental>
+            <GenerateDebugInformation>false</GenerateDebugInformation>
             <SubSystem>Windows</SubSystem>
         </Link>
     </ItemDefinitionGroup>
