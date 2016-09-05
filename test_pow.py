@@ -34,6 +34,8 @@ digest = hashlib.sha512(payload).digest()
 target = 2 ** 64 / (trials * (adjustedLength + ((time_to_live * adjustedLength) / (2 ** 16))))
 target_bytes = Q_BE.pack(target)
 
+logger.info('Target: %#018x', target)
+
 def do_pow_py_be():
     message = bytearray(8 + len(digest))
     message[8:] = digest
@@ -59,7 +61,7 @@ def do_pow_vs():
     return lib.BitmessagePOW(digest, target)
 
 def do_pow_mingw():
-    lib = ctypes.CDLL('bmpow{0}_m.dll'.foramt(interpreter_bits))
+    lib = ctypes.CDLL('bmpow{0}_m.dll'.format(interpreter_bits))
 
     lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
     lib.BitmessagePOW.restype = ctypes.c_uint64
@@ -81,6 +83,7 @@ for do_pow in [do_pow_py_be, do_pow_py_le, do_pow_vs, do_pow_mingw, do_pow_alt]:
         nonce = do_pow()
         elapsed = timeit.default_timer() - start
         rate = nonce / elapsed if elapsed > 0 else nonce
-        logger.info('%s returned %#018x in %.6f seconds (~%d nonces / second)', do_pow.__name__, nonce, elapsed, rate)
+        proof = Q_BE.unpack(hashlib.sha512(hashlib.sha512(Q_BE.pack(nonce) + digest).digest()).digest())
+        logger.info('%s returned %#018x for proof %#018x in %.6f seconds (~%d nonces / second)', do_pow.__name__, nonce, proof, elapsed, rate)
     except Exception as err:
         logger.warning('%s failed: %s', do_pow.__name__, err)
