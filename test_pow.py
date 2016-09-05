@@ -1,6 +1,7 @@
 import ctypes
 import hashlib
 import logging
+import os
 import struct
 import sys
 import timeit
@@ -30,7 +31,7 @@ def do_pow_py():
             return nonce
 
 def do_pow_x86():
-    lib = ctypes.CDLL('bin\bmpow32.dll')
+    lib = ctypes.CDLL(os.path.join(os.environ['APPVEYOR_BUILD_FOLDER'], 'bin\bmpow32.dll'))
 
     lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
     lib.BitmessagePOW.restype = ctypes.c_uint64
@@ -38,7 +39,7 @@ def do_pow_x86():
     return lib.BitmessagePOW(digest, target)
 
 def do_pow_x64():
-    lib = ctypes.CDLL('bin\bmpow64.dll')
+    lib = ctypes.CDLL(os.path.join(os.environ['APPVEYOR_BUILD_FOLDER'], 'bin\bmpow64.dll'))
 
     lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
     lib.BitmessagePOW.restype = ctypes.c_uint64
