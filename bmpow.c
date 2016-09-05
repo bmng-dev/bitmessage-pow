@@ -33,15 +33,15 @@ typedef unsigned __int64 uint64_t;
 					  ((uint64_t)(x) >> 56) )
 
 uint64_t max_val;
-uint8_t *initialHash;
+byte_t *initialHash;
 uint64_t successval = 0;
 uint32_t numthreads = 0;
 
 DWORD WINAPI threadfunc(LPVOID param) {
 	uint32_t incamt = *((uint32_t*)param);
 	SHA512_CTX sha;
-	uint8_t buf[POW_BUFFER_SIZE];
-	uint8_t output[HASH_SIZE];
+	byte_t buf[POW_BUFFER_SIZE];
+	byte_t output[HASH_SIZE];
 
 	uint64_t * nonce = (uint64_t *)buf;
 	uint64_t * hash = (uint64_t *)output;
@@ -82,7 +82,7 @@ void getnumthreads()
 		numthreads = 1;
 }
 
-EXPORT uint64_t BitmessagePOW(uint8_t * starthash, uint64_t target)
+EXPORT uint64_t BitmessagePOW(byte_t * starthash, uint64_t target)
 {
 	HANDLE* threads;
 	uint32_t *threaddata;
@@ -90,7 +90,7 @@ EXPORT uint64_t BitmessagePOW(uint8_t * starthash, uint64_t target)
 	successval = 0;
 	max_val = BSWAP_64(target);
 	getnumthreads();
-	initialHash = (uint8_t *)starthash;
+	initialHash = (byte_t *)starthash;
 	threads = (HANDLE*)calloc(sizeof(HANDLE), numthreads);
 	threaddata = (uint32_t *)calloc(sizeof(uint32_t), numthreads);
 	for (i = 0; i < numthreads; i++) {
