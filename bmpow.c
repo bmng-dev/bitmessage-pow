@@ -59,7 +59,7 @@ DWORD WINAPI threadfunc(LPVOID param) {
 		SHA512_Update(&sha, output, HASH_SIZE);
 		SHA512_Final(output, &sha);
 
-		if (0 >= memcmp(output, max_val, sizeof(uint64_t)) {
+		if (0 >= memcmp(output, max_val, sizeof(uint64_t))) {
 			successval = BSWAP_64(*nonce);
 		}
 	}
