@@ -13,14 +13,16 @@
   #define EXPORT __declspec(dllexport)
 #endif
 
-const int HASH_SIZE = SHA512_DIGEST_LENGTH;
+#define HASH_SIZE SHA512_DIGEST_LENGTH
+#define POW_BUFFER_SIZE sizeof(uint64_t) + HASH_SIZE
 
 typedef unsigned __int8 byte_t;
 typedef unsigned __int32 uint32_t;
 typedef unsigned __int64 uint64_t;
 
-// http://segfault.kiev.ua/~netch/articles/20131219-bswap.txt
-// https://blogs.oracle.com/DanX/entry/optimizing_byte_swapping_for_fun
+/* http://segfault.kiev.ua/~netch/articles/20131219-bswap.txt
+ * https://blogs.oracle.com/DanX/entry/optimizing_byte_swapping_for_fun
+ */
 #define BSWAP_64(x) ( ((uint64_t)(x) << 56) | \\
 					 (((uint64_t)(x) << 40) & 0x00ff000000000000ULL) | \\
 					 (((uint64_t)(x) << 24) & 0x0000ff0000000000ULL) | \\
@@ -38,28 +40,28 @@ uint32_t numthreads = 0;
 DWORD WINAPI threadfunc(LPVOID param) {
 	uint32_t incamt = *((uint32_t*)param);
 	SHA512_CTX sha;
-	uint8_t buf[HASH_SIZE + sizeof(uint64_t)];
+	uint8_t buf[POW_BUFFER_SIZE];
 	uint8_t output[HASH_SIZE];
 
-	uint64_t tmpnonce = incamt;
 	uint64_t * nonce = (uint64_t *)buf;
 	uint64_t * hash = (uint64_t *)output;
 
+	(*nonce) = incamt;
 	memcpy(buf + sizeof(uint64_t), initialHash, HASH_SIZE);
 
+	/* TODO: This loop is potentially infinite*/
 	while (successval == 0) {
-		tmpnonce += numthreads;
+		(*nonce) += numthreads; /* increment nonce */
 
-		(*nonce) = ntohll(tmpnonce); /* increment nonce */
 		SHA512_Init(&sha);
-		SHA512_Update(&sha, buf, HASH_SIZE + sizeof(uint64_t));
+		SHA512_Update(&sha, buf, POW_BUFFER_SIZE);
 		SHA512_Final(output, &sha);
 		SHA512_Init(&sha);
 		SHA512_Update(&sha, output, HASH_SIZE);
 		SHA512_Final(output, &sha);
 
-		if (ntohll(*hash) < max_val) {
-			successval = tmpnonce;
+		if (*hash < max_val) {
+			successval = BSWAP_64(*nonce);
 		}
 	}
 	return EXIT_SUCCESS;
@@ -86,7 +88,7 @@ EXPORT uint64_t BitmessagePOW(uint8_t * starthash, uint64_t target)
 	uint32_t *threaddata;
 	int i;
 	successval = 0;
-	max_val = target;
+	max_val = BSWAP_64(target);
 	getnumthreads();
 	initialHash = (uint8_t *)starthash;
 	threads = (HANDLE*)calloc(sizeof(HANDLE), numthreads);
