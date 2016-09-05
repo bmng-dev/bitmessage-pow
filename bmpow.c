@@ -32,7 +32,7 @@ typedef unsigned __int64 uint64_t;
 					 (((uint64_t)(x) >> 40) & 0x000000000000ff00ULL) | \
 					  ((uint64_t)(x) >> 56) )
 
-uint64_t max_val;
+byte_t *max_val;
 byte_t *initialHash;
 uint64_t successval = 0;
 uint32_t numthreads = 0;
@@ -44,7 +44,6 @@ DWORD WINAPI threadfunc(LPVOID param) {
 	byte_t output[HASH_SIZE];
 
 	uint64_t * nonce = (uint64_t *)buf;
-	uint64_t * hash = (uint64_t *)output;
 
 	(*nonce) = incamt;
 	memcpy(buf + sizeof(uint64_t), initialHash, HASH_SIZE);
@@ -60,7 +59,7 @@ DWORD WINAPI threadfunc(LPVOID param) {
 		SHA512_Update(&sha, output, HASH_SIZE);
 		SHA512_Final(output, &sha);
 
-		if (*hash >= max_val) {
+		if (0 >= memcmp(output, max_val, sizeof(uint64_t)) {
 			successval = BSWAP_64(*nonce);
 		}
 	}
@@ -88,7 +87,8 @@ EXPORT uint64_t BitmessagePOW(byte_t * starthash, uint64_t target)
 	uint32_t *threaddata;
 	int i;
 	successval = 0;
-	max_val = BSWAP_64(target);
+	target = BSWAP_64(target);
+	max_val = (byte_t *)&target;
 	getnumthreads();
 	initialHash = (byte_t *)starthash;
 	threads = (HANDLE*)calloc(sizeof(HANDLE), numthreads);

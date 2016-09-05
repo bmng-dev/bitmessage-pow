@@ -50,7 +50,7 @@ def do_pow_py_le():
     for nonce in xrange(0x7FFFFFFF):
         Q_LE.pack_into(message, 0, nonce)
         if 0 >= cmp(hashlib.sha512(hashlib.sha512(message).digest()).digest(), target_bytes):
-            return nonce
+            return Q_BE.unpack_from(message, 0)[0]
 
 def do_pow_vs():
     lib = ctypes.CDLL('bin\\bmpow{0}.dll'.format(interpreter_bits))
