@@ -42,7 +42,6 @@
         <ClCompile>
             <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
             <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">C:\OpenSSL-Win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-            <PreprocessToFile>true</PreprocessToFile>
             <!--RuntimeLibrary>MultiThreaded</RuntimeLibrary-->
         </ClCompile>
         <Link>

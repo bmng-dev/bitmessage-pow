@@ -11,9 +11,6 @@ platform:
 environment:
   VisualStudioVersion: 14.0
 
-build_script:
-- msbuild "bmpow.vcxproj" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-
 test_script:
 - cmd: >-
     python test_pow.py
