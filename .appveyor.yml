@@ -11,6 +11,10 @@ platform:
 environment:
   VisualStudioVersion: 14.0
 
+build_script:
+- msbuild "bmpow.vcxproj" /preprocess:"bmpow_%PLATFORM%_pp.vcxproj" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+- msbuild "bmpow_%PLATFORM%_pp.vcxproj" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+
 test_script:
 - cmd: >-
     python test_pow.py
@@ -19,5 +23,6 @@ test_script:
 
 artifacts:
 - path: bin\bmpow*.dll
+- path: bmpow_*.vcxproj
 
 deploy: off
