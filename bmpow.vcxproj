@@ -27,7 +27,6 @@
     <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
         <ConfigurationType>DynamicLibrary</ConfigurationType>
         <PlatformToolset>v140_xp</PlatformToolset>
-        <PreferredToolArchitecture Condition="'$(Platform)'=='x64'">x64</PreferredToolArchitecture>
     </PropertyGroup>
 
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -43,13 +42,13 @@
         <ClCompile>
             <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
             <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">C:\OpenSSL-Win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-            <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+            <!--RuntimeLibrary>MultiThreaded</RuntimeLibrary-->
         </ClCompile>
         <Link>
             <AdditionalDependencies>libeay32.lib</AdditionalDependencies>
             <AdditionalLibraryDirectories Condition="'$(Platform)'=='Win32'">C:\OpenSSL-Win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
             <AdditionalLibraryDirectories Condition="'$(Platform)'=='x64'">C:\OpenSSL-Win64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <GenerateDebugInformation>false</GenerateDebugInformation>
+            <!--GenerateDebugInformation>false</GenerateDebugInformation-->
             <SubSystem>Windows</SubSystem>
         </Link>
     </ItemDefinitionGroup>
