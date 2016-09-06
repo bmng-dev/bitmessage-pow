@@ -38,14 +38,13 @@ uint64_t successval = 0;
 uint32_t numthreads = 0;
 
 DWORD WINAPI threadfunc(LPVOID param) {
-	uint32_t incamt = *((uint32_t*)param);
 	SHA512_CTX sha;
 	byte_t buf[POW_BUFFER_SIZE];
 	byte_t output[HASH_SIZE];
 
 	uint64_t * nonce = (uint64_t *)buf;
 
-	(*nonce) = incamt;
+	(*nonce) = *((uint32_t*)param);
 	memcpy(buf + sizeof(uint64_t), initialHash, HASH_SIZE);
 
 	do {
@@ -60,7 +59,8 @@ DWORD WINAPI threadfunc(LPVOID param) {
 			successval = BSWAP_64(*nonce);
 			break;
 		}
-	} while(((*nonce) += numthreads) > numthreads);
+	} while(successval == 0 && (((*nonce) += numthreads) > numthreads));
+	
 	return EXIT_SUCCESS;
 }
 

@@ -13,7 +13,7 @@ environment:
 
 build_script:
 - msbuild "bmpow.vcxproj" /preprocess:"bmpow_%PLATFORM%_pp.vcxproj" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-- msbuild "bmpow_%PLATFORM%_pp.vcxproj" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+- msbuild "bmpow.vcxproj" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 test_script:
 - cmd: >-
