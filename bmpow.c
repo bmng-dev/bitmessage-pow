@@ -64,19 +64,33 @@ DWORD WINAPI threadfunc(LPVOID param) {
 	return EXIT_SUCCESS;
 }
 
-void getnumthreads()
-{
-	DWORD_PTR dwProcessAffinity, dwSystemAffinity;
-	size_t len = sizeof(dwProcessAffinity);
-	int i;
-	if (numthreads > 0)
+void getnumthreads() {
+	DWORD_PTR dwProcessAffinity, dwSystemAffinity, dwOne;
+
+	if (numthreads > 0) {
 		return;
-	GetProcessAffinityMask(GetCurrentProcess(), &dwProcessAffinity, &dwSystemAffinity);
-	for (i = 0; i < len * 8; i++)
-		if (dwProcessAffinity & (1LL << i))
-			numthreads++;
-	if (numthreads == 0) // something failed
+	}
+
+	if (0 == GetProcessAffinityMask(GetCurrentProcess(), &dwProcessAffinity, &dwSystemAffinity)) {
+		/* GetLastError() */
 		numthreads = 1;
+		return;
+	}
+
+	if (dwSystemAffinity == 0) {
+		/* The process contains threads in multiple processor groups */
+		numthreads = 2;
+		return;
+	}
+
+	dwOne = (DWORD_PTR)1;
+	for ( ; dwProcessAffinity > 0; dwProcessAffinity >>= 1) {
+		numthreads += dwProcessAffinity & dwOne;
+	}
+
+	if (numthreads == 0) {
+		numthreads = 1;
+	}
 }
 
 EXPORT uint64_t BitmessagePOW(byte_t * starthash, uint64_t target)
@@ -97,6 +111,11 @@ EXPORT uint64_t BitmessagePOW(byte_t * starthash, uint64_t target)
 		SetThreadPriority(threads[i], THREAD_PRIORITY_IDLE);
 	}
 	WaitForMultipleObjects(numthreads, threads, TRUE, INFINITE);
+	for (i = 0; i < numthreads; i++){
+		if (0 == CloseHandle(threads[i])) {
+			/* GetLastError() */
+		}
+	}
 	free(threads);
 	free(threaddata);
 	return successval;
