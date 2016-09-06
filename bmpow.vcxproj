@@ -34,20 +34,17 @@
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
         <OutDir>bin\</OutDir>
         <IntDir>temp\$(Configuration)_$(PlatformName)\</IntDir>
-        <TargetName Condition="'$(Platform)'=='Win32'">bmpow32</TargetName>
-        <TargetName Condition="'$(Platform)'=='x64'">bmpow64</TargetName>
+        <TargetName>bmpow$(PlatformArchitecture)</TargetName>
     </PropertyGroup>
 
     <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
         <ClCompile>
-            <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-            <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">C:\OpenSSL-Win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+            <AdditionalIncludeDirectories>C:\OpenSSL-Win$(PlatformArchitecture)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
             <!--RuntimeLibrary>MultiThreaded</RuntimeLibrary-->
         </ClCompile>
         <Link>
             <AdditionalDependencies>libeay32.lib</AdditionalDependencies>
-            <AdditionalLibraryDirectories Condition="'$(Platform)'=='Win32'">C:\OpenSSL-Win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <AdditionalLibraryDirectories Condition="'$(Platform)'=='x64'">C:\OpenSSL-Win64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalLibraryDirectories>C:\OpenSSL-Win$(PlatformArchitecture)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
             <!--GenerateDebugInformation>false</GenerateDebugInformation-->
             <SubSystem>Windows</SubSystem>
         </Link>
