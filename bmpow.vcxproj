@@ -40,7 +40,7 @@
     <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
         <ClCompile>
             <AdditionalIncludeDirectories>C:\OpenSSL-Win$(PlatformArchitecture)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-            <PreprocessorDefinitions>NTDDI_VERSION=0x05010300;_WIN32_WINNT=0x0502;WINVER=0x0502;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <PreprocessorDefinitions>NTDDI_VERSION=0x05010200;_WIN32_WINNT=0x0502;WINVER=0x0502;%(PreprocessorDefinitions)</PreprocessorDefinitions>
             <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
         </ClCompile>
         <Link>
