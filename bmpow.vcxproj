@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="ClCompile" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
     <ItemGroup Label="ProjectConfigurations">
         <ProjectConfiguration Include="Release|Win32">
@@ -26,7 +26,7 @@
 
     <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
         <ConfigurationType>DynamicLibrary</ConfigurationType>
-        <PlatformToolset>v140_xp</PlatformToolset>
+        <PlatformToolset Condition="'$(PlatformToolset)'!=''">$(PlatformToolset)</PlatformToolset>
     </PropertyGroup>
 
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -41,6 +41,8 @@
         <ClCompile>
             <AdditionalIncludeDirectories>C:\OpenSSL-Win$(PlatformArchitecture)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
             <!--RuntimeLibrary>MultiThreaded</RuntimeLibrary-->
+            <PreprocessToFile>True</PreprocessToFile>
+            <AdditionalOptions>/Fibmpow_$(Platform)_$(VisualStudioVersion).i</AdditionalOptions>
         </ClCompile>
         <Link>
             <AdditionalDependencies>libeay32.lib</AdditionalDependencies>

@@ -9,15 +9,21 @@ platform:
 - x64
 
 environment:
-  VisualStudioVersion: 14.0
+  matrix:
+  - VisualStudioVersion: 9.0
+  - VisualStudioVersion: 10.0
+  - VisualStudioVersion: 11.0
+    PlatformToolset: v110_xp
+  - VisualStudioVersion: 12.0
+    PlatformToolset: v120_xp
+  - VisualStudioVersion: 14.0
+    PlatformToolset: v140_xp
 
-test_script:
-- cmd: >-
-    python test_pow.py
-
-    C:\Python27-x64\python test_pow.py
+build_script:
+- msbuild "bmpow.vcxproj" /preprocess:"bmpow_%PLATFORM%_%VisualStudioVersion%_pp.vcxproj" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+- msbuild "bmpow.vcxproj" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 artifacts:
-- path: bin\bmpow*.dll
+- path: bmpow_*
 
 deploy: off
