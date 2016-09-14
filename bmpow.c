@@ -92,7 +92,7 @@ void getnumthreads() {
 		}
 
 		for (kaMask = 1; kaMask > 0; kaMask <<= 1) {
-			numthreads += gaGroupAffinity.Mask & dwMask;
+			numthreads += gaGroupAffinity.Mask & kaMask;
 		}
 
 		if (numthreads == 0) {

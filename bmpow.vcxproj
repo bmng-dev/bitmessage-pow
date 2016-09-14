@@ -40,6 +40,7 @@
     <ItemDefinitionGroup>
         <ClCompile>
             <AdditionalIncludeDirectories>C:\OpenSSL-Win$(PlatformArchitecture)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+            <PreprocessorDefinitions Condition="'$(PreprocessorDefinitions)' != ''">$(PreprocessorDefinitions)</PreprocessorDefinitions>
         </ClCompile>
         <Link>
             <AdditionalDependencies>libeay32.lib</AdditionalDependencies>
