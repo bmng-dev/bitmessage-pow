@@ -17,7 +17,7 @@ environment:
 
 test_script:
 - python test_pow.py
-- "C:\\Python27-x64\\python" test_pow.py
+- cmd: C:\Python27-x64\python test_pow.py
 
 artifacts:
 - path: bin\bmpow*.dll
