@@ -85,7 +85,7 @@ void getnumthreads() {
 		/* The process contains threads in multiple processor groups.
 		 * Interrogate the processor group of the current threaddata
 		 */
-		if (0 == GetThreadGroupAffinity(GetCurrentThread(), &gaGroupAffinity)){
+		if (0 == GetThreadGroupAffinity(GetCurrentThread(), &gaGroupAffinity)) {
 			/* GetLastError() */
 			numthreads = 1;
 			return;
@@ -98,7 +98,7 @@ void getnumthreads() {
 		if (numthreads == 0) {
 			numthreads = 1;
 		}
-		return
+		return;
 	}
 #endif /* _WIN32_WINNT >= _WIN32_WINNT_WIN7 */
 
