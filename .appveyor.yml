@@ -12,10 +12,14 @@ environment:
   VisualStudioVersion: 9.0
   PlatformToolset: v90
   matrix:
-  - Win32WinNT:
-  - Win32WinNT: 0x0601
+  - PreprocessorDefinitions: Win32WinNT=0x0501
+  - PreprocessorDefinitions: Win32WinNT=0x0601
+
+test_script:
+- python test_pow.py
+- "C:\Python27-x64\python" test_pow.py
 
 artifacts:
-- path: bin\*\bmpow*.dll
+- path: bin\bmpow*.dll
 
 deploy: off

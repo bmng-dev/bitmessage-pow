@@ -60,24 +60,8 @@ def do_pow_vs():
 
     return lib.BitmessagePOW(digest, target)
 
-def do_pow_mingw():
-    lib = ctypes.CDLL('bmpow{0}_m.dll'.format(interpreter_bits))
 
-    lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
-    lib.BitmessagePOW.restype = ctypes.c_uint64
-
-    return lib.BitmessagePOW(digest, target)
-
-def do_pow_alt():
-    lib = ctypes.CDLL('bitmsghash{0}.dll'.format(interpreter_bits))
-
-    lib.BitmessagePOW.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
-    lib.BitmessagePOW.restype = ctypes.c_uint64
-
-    return lib.BitmessagePOW(digest, target)
-
-
-for do_pow in [do_pow_py_be, do_pow_py_le, do_pow_vs, do_pow_mingw, do_pow_alt]:
+for do_pow in [do_pow_py_be, do_pow_py_le, do_pow_vs]:
     try:
         start = timeit.default_timer()
         nonce = do_pow()
