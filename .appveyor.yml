@@ -9,19 +9,13 @@ platform:
 - x64
 
 environment:
+  VisualStudioVersion: 9.0
+  PlatformToolset: v90
   matrix:
-  - VisualStudioVersion: 9.0
-    PlatformToolset: v90
-  - VisualStudioVersion: 10.0
-    PlatformToolset: v100
-  - VisualStudioVersion: 11.0
-    PlatformToolset: v110_xp
-  - VisualStudioVersion: 12.0
-    PlatformToolset: v120_xp
-  - VisualStudioVersion: 14.0
-    PlatformToolset: v140_xp
+  - Win32WinNT:
+  - Win32WinNT: 0x0601
 
 artifacts:
-- path: bin\bmpow*.dll
+- path: bin\*\bmpow*.dll
 
 deploy: off

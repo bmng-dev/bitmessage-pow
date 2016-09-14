@@ -24,29 +24,36 @@
 
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.default.props" />
 
-    <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'" Label="Configuration">
         <ConfigurationType>DynamicLibrary</ConfigurationType>
-        <PlatformToolset Condition="'$(PlatformToolset)'!=''">$(PlatformToolset)</PlatformToolset>
+        <PlatformToolset Condition="'$(PlatformToolset)' != ''">$(PlatformToolset)</PlatformToolset>
     </PropertyGroup>
 
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
 
+    <PropertyGroup Condition="'$(Win32WinNT)' == ''">
+        <Win32WinNT>0x0501</Win32WinNT>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(NTDDIVersion)' == ''">
+        <NTDDIVersion Condition="'$(Platform)' == 'Win32'">0x05010300</NTDDIVersion>
+        <NTDDIVersion Condition="'$(Platform)' == 'x64'">0x05010200</NTDDIVersion>
+    </PropertyGroup>
+
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
-        <OutDir>bin\</OutDir>
-        <IntDir>temp\$(Configuration)_$(PlatformName)\</IntDir>
-        <TargetName>bmpow$(PlatformArchitecture)_$(VisualStudioVersion)</TargetName>
+        <OutDir>bin\$(PlatformName)_$(Win32WinNT)</OutDir>
+        <IntDir>temp\$(Configuration)_$(PlatformName)</IntDir>
+        <TargetName>bmpow$(PlatformArchitecture)</TargetName>
     </PropertyGroup>
 
     <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
         <ClCompile>
             <AdditionalIncludeDirectories>C:\OpenSSL-Win$(PlatformArchitecture)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-            <PreprocessorDefinitions>NTDDI_VERSION=0x05010300;_WIN32_WINNT=0x0501;WINVER=0x0501;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-            <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+            <PreprocessorDefinitions>_WIN32_WINNT=$(Win32WinNT);NTDDI_VERSION=$(NTDDIVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
         </ClCompile>
         <Link>
             <AdditionalDependencies>libeay32.lib</AdditionalDependencies>
             <AdditionalLibraryDirectories>C:\OpenSSL-Win$(PlatformArchitecture)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <!--GenerateDebugInformation>false</GenerateDebugInformation-->
             <SubSystem>Windows</SubSystem>
         </Link>
     </ItemDefinitionGroup>

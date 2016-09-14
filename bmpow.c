@@ -1,9 +1,8 @@
 
 #include <Windows.h>
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <malloc.h> //calloc, free
+#include <memory.h> //memcmp, memcpy
 
 #include <openssl/sha.h>
 
@@ -42,9 +41,9 @@ DWORD WINAPI threadfunc(LPVOID param) {
 	byte_t buf[POW_BUFFER_SIZE];
 	byte_t output[HASH_SIZE];
 
-	uint64_t * nonce = (uint64_t *)buf;
+	uint64_t *nonce = (uint64_t *)buf;
 
-	(*nonce) = *((uint32_t*)param);
+	(*nonce) = *((uint32_t *)param);
 	memcpy(buf + sizeof(uint64_t), initialHash, HASH_SIZE);
 
 	do {
@@ -65,7 +64,11 @@ DWORD WINAPI threadfunc(LPVOID param) {
 }
 
 void getnumthreads() {
-	DWORD_PTR dwProcessAffinity, dwSystemAffinity, dwOne;
+	DWORD_PTR dwProcessAffinity, dwSystemAffinity, dwMask;
+#if _WIN32_WINNT >= _WIN32_WINNT_WIN7
+	GROUP_AFFINITY gaGroupAffinity;
+	KAFFINITY kaMask;
+#endif /* _WIN32_WINNT >= _WIN32_WINNT_WIN7 */
 
 	if (numthreads > 0) {
 		return;
@@ -77,15 +80,30 @@ void getnumthreads() {
 		return;
 	}
 
+#if _WIN32_WINNT >= _WIN32_WINNT_WIN7
 	if (dwSystemAffinity == 0) {
-		/* The process contains threads in multiple processor groups */
-		numthreads = 2;
-		return;
-	}
+		/* The process contains threads in multiple processor groups.
+		 * Interrogate the processor group of the current threaddata
+		 */
+		if (0 == GetThreadGroupAffinity(GetCurrentThread(), &gaGroupAffinity)){
+			/* GetLastError() */
+			numthreads = 1;
+			return;
+		}
 
-	dwOne = (DWORD_PTR)1;
-	for ( ; dwProcessAffinity > 0; dwProcessAffinity >>= 1) {
-		numthreads += dwProcessAffinity & dwOne;
+		for (kaMask = 1; kaMask > 0; kaMask <<= 1) {
+			numthreads += gaGroupAffinity.Mask & dwMask;
+		}
+
+		if (numthreads == 0) {
+			numthreads = 1;
+		}
+		return
+	}
+#endif /* _WIN32_WINNT >= _WIN32_WINNT_WIN7 */
+
+	for (dwMask = 1; dwMask > 0; dwMask <<= 1) {
+		numthreads += dwProcessAffinity & dwMask;
 	}
 
 	if (numthreads == 0) {
@@ -93,9 +111,9 @@ void getnumthreads() {
 	}
 }
 
-EXPORT uint64_t BitmessagePOW(byte_t * starthash, uint64_t target)
+EXPORT uint64_t BitmessagePOW(byte_t *starthash, uint64_t target)
 {
-	HANDLE* threads;
+	HANDLE *threads;
 	uint32_t *threaddata;
 	int i;
 	successval = 0;
@@ -103,8 +121,8 @@ EXPORT uint64_t BitmessagePOW(byte_t * starthash, uint64_t target)
 	max_val = (byte_t *)&target;
 	getnumthreads();
 	initialHash = (byte_t *)starthash;
-	threads = (HANDLE*)calloc(sizeof(HANDLE), numthreads);
-	threaddata = (uint32_t *)calloc(sizeof(uint32_t), numthreads);
+	threads = (HANDLE *)calloc(numthreads, sizeof(HANDLE));
+	threaddata = (uint32_t *)calloc(numthreads, sizeof(uint32_t));
 	for (i = 0; i < numthreads; i++) {
 		threaddata[i] = (uint32_t)i;
 		threads[i] = CreateThread(NULL, 0, threadfunc, (LPVOID)&threaddata[i], 0, NULL);
