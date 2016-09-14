@@ -12,8 +12,8 @@ environment:
   VisualStudioVersion: 9.0
   PlatformToolset: v90
   matrix:
-  - PreprocessorDefinitions: Win32WinNT=0x0501
-  - PreprocessorDefinitions: Win32WinNT=0x0601
+  - PreprocessorDefinitions: _WIN32_WINNT=0x0501
+  - PreprocessorDefinitions: _WIN32_WINNT=0x0601
 
 test_script:
 - python test_pow.py
