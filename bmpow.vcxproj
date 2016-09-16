@@ -45,7 +45,7 @@
         <Link>
             <AdditionalDependencies>libeay32.lib</AdditionalDependencies>
             <AdditionalLibraryDirectories>C:\OpenSSL-Win$(PlatformArchitecture)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <ImageHasSafeExceptionHandlers>true</ImageHasSafeExceptionHandlers>
+            <ImageHasSafeExceptionHandlers Condition="'$(Platform)' == 'Win32'">true</ImageHasSafeExceptionHandlers>
             <MinimumRequiredVersion Condition="'$(SubSystemVersion)' != ''">$(SubSystemVersion)</MinimumRequiredVersion>
             <SetChecksum>true</SetChecksum>
             <SubSystem>Windows</SubSystem>
@@ -60,3 +60,6 @@
     build, clean, etc. -->
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Targets" />
 </Project>
+
+  37025 0.139621 265182.171736343
+1394524 5.113060 272737.656119819
