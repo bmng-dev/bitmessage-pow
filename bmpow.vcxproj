@@ -45,8 +45,15 @@
         <Link>
             <AdditionalDependencies>libeay32.lib</AdditionalDependencies>
             <AdditionalLibraryDirectories>C:\OpenSSL-Win$(PlatformArchitecture)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <ImageHasSafeExceptionHandlers>true<ImageHasSafeExceptionHandlers>
+            <MinimumRequiredVersion Condition="'$(SubSystemVersion)' != ''">$(SubSystemVersion)</MinimumRequiredVersion>
+            <SetChecksum>true</SetChecksum>
             <SubSystem>Windows</SubSystem>
+            <Version>0.1</Version>
         </Link>
+        <!--Manifest>
+            <UpdateFileHashes>true</UpdateFileHashes>
+        </Manifest-->
     </ItemDefinitionGroup>
 
     <!-- Defines (directly or via imports) VC++ targets such as
