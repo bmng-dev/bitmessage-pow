@@ -60,6 +60,3 @@
     build, clean, etc. -->
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Targets" />
 </Project>
-
-  37025 0.139621 265182.171736343
-1394524 5.113060 272737.656119819
