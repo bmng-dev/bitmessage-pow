@@ -52,11 +52,7 @@
             <Version>0.1</Version>
         </Link>
         <Manifest>
-            <!--AdditionalManifestFiles>bmpow$(PlatformArchitecture).manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles-->
             <AssemblyIdentity>Bitmessage.POW, processorArchitecture=$(PlatformTarget), version=0.1.0.0, type=win32</AssemblyIdentity>
-            <ComponentFileName>$(TargetName)</ComponentFileName>
-            <UpdateFileHashes>true</UpdateFileHashes>
-            <UpdateFileHashesSearchPath>$(OutDir)</UpdateFileHashesSearchPath>
         </Manifest>
     </ItemDefinitionGroup>
 
