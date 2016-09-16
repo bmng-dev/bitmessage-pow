@@ -45,7 +45,7 @@
         <Link>
             <AdditionalDependencies>libeay32.lib</AdditionalDependencies>
             <AdditionalLibraryDirectories>C:\OpenSSL-Win$(PlatformArchitecture)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <ImageHasSafeExceptionHandlers>true<ImageHasSafeExceptionHandlers>
+            <ImageHasSafeExceptionHandlers>true</ImageHasSafeExceptionHandlers>
             <MinimumRequiredVersion Condition="'$(SubSystemVersion)' != ''">$(SubSystemVersion)</MinimumRequiredVersion>
             <SetChecksum>true</SetChecksum>
             <SubSystem>Windows</SubSystem>
