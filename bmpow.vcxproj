@@ -52,7 +52,9 @@
             <Version>0.1</Version>
         </Link>
         <Manifest>
+            <AdditionalManifestFiles>bmpow$(PlatformArchitecture).manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
             <UpdateFileHashes>true</UpdateFileHashes>
+            <UpdateFileHashesSearchPath>$(OutDir)</UpdateFileHashesSearchPath>
         </Manifest>
     </ItemDefinitionGroup>
 
