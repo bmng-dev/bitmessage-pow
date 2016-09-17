@@ -1,4 +1,0 @@
-<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
-    <assemblyIdentity type="win32" name="Bitmessage.POW" version="0.1.0.0" processorArchitecture="amd64" />
-    <file name="bmpow64.dll" />
-</assembly>

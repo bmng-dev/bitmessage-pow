@@ -1,0 +1,53 @@
+#include <windows.h>
+
+
+#define VER_FILE_VERSION    0, 1, 0, 0
+#define VER_PRODUCT_VERSION 0, 1
+#define VER_FILEFLAGS       (VS_FF_PRERELEASE | VS_FF_PRIVATEBUILD)
+#define VER_FILEOS          VOS_NT_WINDOWS32
+#define VER_FILETYPE        VFT_DLL
+#define VER_FILESUBTYPE     VFT2_UNKNOWN
+
+#ifdef UNICODE
+    #define LANG_CHARSET "040904B0"
+#else
+    #define LANG_CHARSET "040904E4"
+#endif /* UNICODE */
+
+#define VER_COMPANY_NAME_STR        TEXT("\0")
+#define VER_FILE_DESCRIPTION_STR    TEXT("Library to perform proof of work suitable for the Bitmessage protocol\0")
+#define VER_FILE_VERSION_STR        TEXT("0.1.0.0\0")
+#define VER_INTERNAL_NAME_STR       TEXT("bmpow\0")
+#define VER_COPYRIGHT_STR           TEXT("Copyright © 2016 bmng-dev\0")
+#define VER_ORIGINAL_FILENAME_STR   TEXT("bmpow.dll\0")
+#define VER_PRIVATE_BUILD_STR       TEXT("Experimenting with build process\0")
+#define VER_PRODUCT_NAME_STR        TEXT("Bitmessage Proof of Work\0")
+#define VER_PRODUCT_VERSION_STR     TEXT("0.1\0")
+#define VER_SPECIAL_BUILD_STR       TEXT("\0")
+
+VS_VERSION_INFO VERSIONINFO
+    FILEVERSION     VER_FILE_VERSION
+    PRODUCTVERSION  VER_PRODUCT_VERSION
+    FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+    FILEFLAGS       VER_FILEFLAGS
+    FILEOS          VER_FILEOS
+    FILETYPE        VER_FILETYPE
+    FILESUBTYPE     VER_FILESUBTYPE
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK LANG_CHARSET
+        BEGIN
+            VALUE "CompanyName",        VER_COMPANY_NAME_STR
+            VALUE "FileDescription",    VER_FILE_DESCRIPTION_STR
+            VALUE "FileVersion",        VER_FILE_VERSION_STR
+            VALUE "InternalName",       VER_INTERNAL_NAME_STR
+            VALUE "LegalCopyright",     VER_COPYRIGHT_STR
+            VALUE "OriginalFilename",   VER_ORIGINAL_FILENAME_STR
+            VALUE "PrivateBuild",       VER_PRIVATE_BUILD_STR
+            VALUE "ProductName",        VER_PRODUCT_NAME_STR
+            VALUE "ProductVersion",     VER_PRODUCT_VERSION_STR
+            /* VALUE "SpecialBuild",       VER_SPECIAL_BUILD_STR */
+        END
+    END
+END

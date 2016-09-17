@@ -12,9 +12,9 @@ environment:
   VisualStudioVersion: 9.0
   PlatformToolset: v90
   matrix:
-  - PreprocessorDefinitions: _WIN32_WINNT=0x0501
+  - WIN32_WINNT: 0x0501
     SubSystemVersion: 5.01
-  - PreprocessorDefinitions: _WIN32_WINNT=0x0601
+  - WIN32_WINNT: 0x0601
     SubSystemVersion: 6.01
 
 test_script:
