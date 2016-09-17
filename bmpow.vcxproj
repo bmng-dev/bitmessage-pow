@@ -39,8 +39,8 @@
 
     <PropertyGroup>
         <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32_LEAN_AND_MEAN</PreprocessorDefinitions>
-        <PreprocessorDefinitions Condition="'$(NTDDI_VERSION)' != ''">$(NTDDI_VERSION);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-        <PreprocessorDefinitions Condition="'$(WIN32_WINNT)' != ''">$(WIN32_WINNT);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions Condition="'$(NTDDI_VERSION)' != ''">NTDDI_VERSION=$(NTDDI_VERSION);$(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions Condition="'$(WIN32_WINNT)' != ''">_WIN32_WINNT=$(WIN32_WINNT);$(PreprocessorDefinitions)</PreprocessorDefinitions>
     </PropertyGroup>
 
     <ItemDefinitionGroup>
