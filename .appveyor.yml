@@ -1,5 +1,7 @@
 version: 1.0.{build}
 
+image: Visual Studio 2015
+
 shallow_clone: true
 
 configuration: Release
@@ -19,6 +21,9 @@ environment:
 
 before_build:
 - msbuild /nologo /preprocess:project_$(configuration)_$(platform).xml
+
+build:
+  project: bmpow.vcxproj
 
 test_script:
 - python test_pow.py
