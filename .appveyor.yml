@@ -5,8 +5,8 @@ shallow_clone: true
 configuration: Release
 
 platform:
+- Win32
 - x64
-#- Win32
 
 environment:
   VisualStudioVersion: 9.0
@@ -14,15 +14,18 @@ environment:
   matrix:
   - WIN32_WINNT: 0x0501
     SubSystemVersion: 5.01
-#  - WIN32_WINNT: 0x0601
-#    SubSystemVersion: 6.01
+  - WIN32_WINNT: 0x0601
+    SubSystemVersion: 6.01
 
-#test_script:
-#- python test_pow.py
-#- cmd: C:\Python27-x64\python test_pow.py
+before_build:
+- msbuild /nologo /preprocess:project_$(configuration)_$(platform).xml
+
+test_script:
+- python test_pow.py
+- cmd: C:\Python27-x64\python test_pow.py
 
 artifacts:
-- path: project.xml
-#- path: bin\bmpow*.dll
+- path: project*.xml
+- path: bin\bmpow*.dll
 
 deploy: off
