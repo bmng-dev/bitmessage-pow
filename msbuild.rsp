@@ -6,3 +6,5 @@
 #Aggregated project file
 /preprocess:project.xml
 
+#Appveyor logger
+/logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"

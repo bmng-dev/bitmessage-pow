@@ -5,8 +5,8 @@ shallow_clone: true
 configuration: Release
 
 platform:
-#- Win32
 - x64
+#- Win32
 
 environment:
   VisualStudioVersion: 9.0
