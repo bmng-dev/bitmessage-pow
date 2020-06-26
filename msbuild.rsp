@@ -1,0 +1,8 @@
+#Appveyor msbuild response file
+
+#No banner
+/nologo
+
+#Aggregated project file
+/preprocess:project.xml
+

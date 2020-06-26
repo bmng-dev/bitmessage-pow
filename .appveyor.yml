@@ -5,7 +5,7 @@ shallow_clone: true
 configuration: Release
 
 platform:
-- Win32
+#- Win32
 - x64
 
 environment:
@@ -14,14 +14,15 @@ environment:
   matrix:
   - WIN32_WINNT: 0x0501
     SubSystemVersion: 5.01
-  - WIN32_WINNT: 0x0601
-    SubSystemVersion: 6.01
+#  - WIN32_WINNT: 0x0601
+#    SubSystemVersion: 6.01
 
-test_script:
-- python test_pow.py
-- cmd: C:\Python27-x64\python test_pow.py
+#test_script:
+#- python test_pow.py
+#- cmd: C:\Python27-x64\python test_pow.py
 
 artifacts:
-- path: bin\bmpow*.dll
+- path: project.xml
+#- path: bin\bmpow*.dll
 
 deploy: off
